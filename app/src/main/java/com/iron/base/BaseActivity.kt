@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import com.iron.widget.SimpleLoadingDialog
+import com.iron.widget.BaseDialogFragment
 import kotlin.reflect.KClass
 
 abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), BaseNavigator {
@@ -61,7 +61,7 @@ abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), BaseNa
 
     override fun hideLoading() {
         val existFragment = supportFragmentManager
-            .findFragmentByTag(SimpleLoadingDialog.TAG) as? SimpleLoadingDialog ?: return
+            .findFragmentByTag(BaseDialogFragment.TAG) as? SimpleLoadingDialog ?: return
 
         if(existFragment.showsDialog) {
             existFragment.dismiss()

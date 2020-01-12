@@ -6,10 +6,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
 import com.iron.base.R
 
-class SimpleLoadingDialog : DialogFragment() {
+class BaseDialogFragment : DialogFragment() {
+
+    @LayoutRes
+    protected open val layoutResId: Int
+            = R.layout.dialog_simple_loading
 
     override fun onStart() {
         super.onStart()
@@ -21,14 +26,14 @@ class SimpleLoadingDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view : View = inflater.inflate(R.layout.dialog_simple_loading, container)
+        val view : View = inflater.inflate(layoutResId, container)
         return view
     }
 
     companion object {
         const val TAG = "SimpleLoadingProgess"
-        fun instantiate() : SimpleLoadingDialog {
-            return SimpleLoadingDialog()
+        fun instantiate() : BaseDialogFragment {
+            return BaseDialogFragment()
         }
     }
 }
