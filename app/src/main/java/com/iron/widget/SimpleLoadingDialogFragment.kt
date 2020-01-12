@@ -1,39 +1,18 @@
 package com.iron.widget
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.LayoutRes
-import androidx.fragment.app.DialogFragment
+import com.iron.base.BaseDialogFragment
 import com.iron.base.R
+import com.iron.base.databinding.FragmentBaseDialogBinding
 
-class BaseDialogFragment : DialogFragment() {
+class SimpleLoadingDialogFragment : BaseDialogFragment<FragmentBaseDialogBinding>() {
 
-    @LayoutRes
-    protected open val layoutResId: Int
-            = R.layout.dialog_simple_loading
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view : View = inflater.inflate(layoutResId, container)
-        return view
-    }
+    override val layoutResId: Int
+        get() = R.layout.fragment_base_dialog
 
     companion object {
-        const val TAG = "SimpleLoadingProgess"
-        fun instantiate() : BaseDialogFragment {
-            return BaseDialogFragment()
+        const val TAG = "SimpleLoadingDialogFragment"
+        fun instantiate() : SimpleLoadingDialogFragment {
+            return SimpleLoadingDialogFragment()
         }
     }
 }

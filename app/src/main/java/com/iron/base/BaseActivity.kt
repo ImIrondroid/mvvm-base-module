@@ -3,13 +3,12 @@ package com.iron.base
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import com.iron.widget.BaseDialogFragment
+import com.iron.widget.SimpleLoadingDialogFragment
 import kotlin.reflect.KClass
 
 abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), BaseNavigator {
@@ -46,22 +45,22 @@ abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), BaseNa
 
     override fun showLoading() {
         val existFragment  = supportFragmentManager
-            .findFragmentByTag(SimpleLoadingDialog.TAG) as? DialogFragment
+            .findFragmentByTag(SimpleLoadingDialogFragment.TAG) as? DialogFragment
 
         if(existFragment == null) {
-            SimpleLoadingDialog.instantiate()
-                .show(supportFragmentManager, SimpleLoadingDialog.TAG)
+            SimpleLoadingDialogFragment.instantiate()
+                .show(supportFragmentManager, SimpleLoadingDialogFragment.TAG)
         } else {
             if(!existFragment.showsDialog) {
                 existFragment
-                    .show(supportFragmentManager, SimpleLoadingDialog.TAG)
+                    .show(supportFragmentManager, SimpleLoadingDialogFragment.TAG)
             }
         }
     }
 
     override fun hideLoading() {
         val existFragment = supportFragmentManager
-            .findFragmentByTag(BaseDialogFragment.TAG) as? SimpleLoadingDialog ?: return
+            .findFragmentByTag(SimpleLoadingDialogFragment.TAG) as? SimpleLoadingDialogFragment ?: return
 
         if(existFragment.showsDialog) {
             existFragment.dismiss()
