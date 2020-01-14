@@ -10,7 +10,8 @@ open class BaseViewModel : ViewModel() {
     }
 
     protected fun addDisposable(disposable: Disposable) {
-        disposable.let(compositeDisposable::add)
+        disposable
+            .let(compositeDisposable::add)
     }
 
     override fun onCleared() {

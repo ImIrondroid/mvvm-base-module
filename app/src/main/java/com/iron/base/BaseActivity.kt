@@ -25,7 +25,7 @@ abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), BaseNa
 
     private fun bindView() {
         viewDataBinding = DataBindingUtil.setContentView<VDB>(this, layoutResId).also {
-            it.lifecycleOwner = this
+            it.lifecycleOwner = this@BaseActivity
             setBindingVariables()
             it.executePendingBindings()
         }
