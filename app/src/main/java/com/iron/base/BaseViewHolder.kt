@@ -8,7 +8,8 @@ open class BaseViewHolder<T>(
     private val viewDataBinding: ViewDataBinding
 ) : RecyclerView.ViewHolder(viewDataBinding.root) {
 
-    protected val context : Context = itemView.context
+    protected val context : Context
+        get() = itemView.context
 
     protected open fun onBind(item : T?) {
         viewDataBinding.apply {
