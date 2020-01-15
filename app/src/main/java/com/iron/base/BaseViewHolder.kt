@@ -11,7 +11,7 @@ open class BaseViewHolder<T>(
     protected val context : Context
         get() = itemView.context
 
-    protected open fun onBind(item : T?) {
+    open fun onBind(item : T?) {
         viewDataBinding.apply {
             //setVariable(BR.item, item)
             executePendingBindings()
