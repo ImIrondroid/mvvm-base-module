@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class BaseRecyclerViewAdapter<T>(
     itemCallback: DiffUtil.ItemCallback<T>
 ) : ListAdapter<T, BaseViewHolder<T>>(itemCallback) {
-    //ListAdapter include methods of submitList
+    //ListAdapter include methods of submitList so no need to get the AsyncListDiffer<T>..
 
     var limitedItemcount: Int? = null
 
