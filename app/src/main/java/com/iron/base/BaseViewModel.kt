@@ -9,6 +9,13 @@ open class BaseViewModel : ViewModel() {
         CompositeDisposable()
     }
 
+    protected fun addAllDisposable(vararg disposables: Disposable) {
+        for(disposable in disposables)
+            disposable
+                .let(compositeDisposable::add)
+
+    }
+
     protected fun addDisposable(disposable: Disposable) {
         disposable
             .let(compositeDisposable::add)

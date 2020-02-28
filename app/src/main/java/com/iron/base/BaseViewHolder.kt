@@ -13,7 +13,7 @@ open class BaseViewHolder<T>(
 
     open fun onBind(item : T?) {
         viewDataBinding.apply {
-            //setVariable(BR.item, item)
+            setVariable(BR.item, item)
             executePendingBindings()
         }
     }

@@ -2,12 +2,9 @@ package com.iron.base
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-
-abstract class BaseRecyclerViewAdapter<T>(
+abstract class BaseRecyclerViewAdapter<T: Any>(
     itemCallback: DiffUtil.ItemCallback<T>
 ) : ListAdapter<T, BaseViewHolder<T>>(itemCallback) {
-    //ListAdapter include methods of submitList so no need to get the AsyncListDiffer<T>..
 
     var limitedItemcount: Int? = null
 

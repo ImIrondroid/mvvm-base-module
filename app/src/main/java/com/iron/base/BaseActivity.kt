@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import com.iron.widget.SimpleLoadingDialogFragment
+import java.io.Serializable
 import kotlin.reflect.KClass
 
 abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), BaseNavigator {
@@ -39,6 +40,13 @@ abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), BaseNa
         startActivity(Intent(this, destination.java))
     }
 
+    override fun <T : Activity> nextActivityWithSerializableData(destination: KClass<T>, data : Any) {
+        startActivity(
+            Intent(this, destination.java).apply {
+                putExtra("data", data as Serializable)
+        })
+    }
+
     override fun previousActivity() {
         onBackPressed()
     }
@@ -66,5 +74,4 @@ abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), BaseNa
             existFragment.dismiss()
         }
     }
-
 }
