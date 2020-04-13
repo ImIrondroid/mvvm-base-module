@@ -9,14 +9,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-abstract class BaseFragment<VDB : ViewDataBinding, BVM : BaseViewModel> : Fragment() {
+abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel<*>> : Fragment() {
 
     @LayoutRes
     protected open val layoutResId : Int = 0
     protected open val viewModelId : Int = 0
 
     protected lateinit var viewDataBinding : VDB
-    protected abstract val viewModel : BVM
+    protected abstract val viewModel : VM
 
     override fun onCreateView(
         inflater: LayoutInflater,

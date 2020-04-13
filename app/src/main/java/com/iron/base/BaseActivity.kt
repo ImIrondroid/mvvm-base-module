@@ -12,42 +12,48 @@ import com.iron.widget.SimpleLoadingDialogFragment
 import java.io.Serializable
 import kotlin.reflect.KClass
 
-abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), BaseNavigator {
+abstract class BaseActivity<VDB : ViewDataBinding, VM: BaseViewModel<*>> : AppCompatActivity(), BaseNavigator {
 
     @LayoutRes
     protected open val layoutResId: Int = 0
+    protected open val viewModelId: Int = BR.viewModel
 
+    protected abstract val viewModel: VM
     protected lateinit var viewDataBinding: VDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        registerNavigator()
         bindView()
     }
 
     private fun bindView() {
-        viewDataBinding = DataBindingUtil.setContentView<VDB>(this, layoutResId).also {
-            it.lifecycleOwner = this@BaseActivity
+        viewDataBinding = DataBindingUtil.setContentView(this, layoutResId)
+        viewDataBinding.apply {
+            lifecycleOwner = this@BaseActivity
             setBindingVariables()
-            it.executePendingBindings()
+            executePendingBindings()
         }
     }
 
+    protected open fun registerNavigator() {}
+
     protected open fun setBindingVariables() {
+        viewDataBinding.setVariable(viewModelId, viewModel)
         //set variables
     }
 
-    override fun <T : Activity> nextActivity(destination: KClass<T>) {
-        startActivity(Intent(this, destination.java))
-    }
-
-    override fun <T : Activity> nextActivityWithSerializableData(destination: KClass<T>, data : Any) {
-        startActivity(
-            Intent(this, destination.java).apply {
-                putExtra("data", data as Serializable)
+    override fun <T : Activity> nextActivity(kClass: KClass<T>, bundle: Bundle?, clearTask: Boolean) {
+        startActivity(Intent(this, kClass.java).apply {
+            bundle?.let(this::putExtras)
+            if(clearTask) {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                        Intent.FLAG_ACTIVITY_NEW_TASK
+            }
         })
     }
 
-    override fun previousActivity() {
+    override fun backActivity() {
         onBackPressed()
     }
 

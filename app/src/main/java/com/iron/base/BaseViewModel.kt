@@ -2,24 +2,23 @@ package com.iron.base
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import java.lang.ref.WeakReference
 
-open class BaseViewModel : ViewModel() {
-    protected val compositeDisposable : CompositeDisposable by lazy {
+open class BaseViewModel<N: BaseNavigator> : ViewModel() {
+
+    private lateinit var mNavigator: WeakReference<N>
+    protected val compositeDisposable: CompositeDisposable by lazy {
         CompositeDisposable()
     }
 
-    protected fun addAllDisposable(vararg disposables: Disposable) {
-        for(disposable in disposables)
-            disposable
-                .let(compositeDisposable::add)
-
+    fun setNavigator(navigator: N) {
+        mNavigator = WeakReference<N>(navigator)
     }
 
-    protected fun addDisposable(disposable: Disposable) {
-        disposable
-            .let(compositeDisposable::add)
+    fun getNavigator(): N {
+        return mNavigator.get()!!
     }
+
 
     override fun onCleared() {
         compositeDisposable.clear()
